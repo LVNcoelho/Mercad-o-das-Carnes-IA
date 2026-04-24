@@ -3,250 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mercadão das Carnes - IA</title>
+    <title>Mercadão das Carnes - IA v1.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        .tab-active { border-bottom: 3px solid #ef4444; color: #ef4444; }
+        .tab-active { border-bottom: 3px solid #ef4444; color: #ef4444; font-weight: bold; }
         @keyframes pulse-light { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .thinking { animation: pulse-light 1.5s infinite; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen font-sans">
+<body class="bg-slate-50 min-h-screen font-sans">
 
-    <!-- Navegação -->
-    <nav class="bg-red-700 text-white p-4 shadow-lg sticky top-0 z-50">
+    <nav class="bg-red-700 text-white p-4 shadow-xl sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold flex items-center gap-2">
-                <i class="fas fa-drumstick-bite"></i> MERCADÃO DAS CARNES <span class="text-xs bg-white text-red-700 px-2 py-0.5 rounded-full">IA V1.0</span>
+            <h1 class="text-xl font-black flex items-center gap-2">
+                <i class="fas fa-drumstick-bite"></i> AÇOUGUE <span class="font-light">IA</span>
             </h1>
-            <div class="flex gap-4">
-                <button onclick="switchTab('gestao')" id="tab-gestao" class="px-3 py-1 font-medium border-b-2 border-transparent hover:border-white transition-all">Gestão de Balcão</button>
-                <button onclick="switchTab('marketing')" id="tab-marketing" class="px-3 py-1 font-medium border-b-2 border-transparent hover:border-white transition-all">Concierge Marketing</button>
+            <div class="flex gap-4 items-center">
+                <button onclick="switchTab('gestao')" id="tab-gestao" class="px-2 py-1 transition-all text-sm md:text-base">Gestão de Estoque</button>
+                <button onclick="switchTab('marketing')" id="tab-marketing" class="px-2 py-1 transition-all text-sm md:text-base">Marketing IA</button>
+                <button onclick="toggleFullscreen()" class="bg-red-800 p-2 rounded-full hover:bg-red-900 transition-colors">
+                    <i class="fas fa-expand"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Container Principal -->
     <main class="container mx-auto p-4 md:p-8">
 
-        <!-- PAINEL 1: GESTÃO DE BALCÃO (ESTOQUE) -->
         <div id="view-gestao" class="space-y-6">
-            <header class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-800">Painel do Gestor de Balcão</h2>
-                <p class="text-gray-600">IA analisando estoque e validade para evitar desperdício.</p>
+            <header class="mb-8 border-b pb-4">
+                <h2 class="text-2xl font-bold text-slate-800">Painel do Gestor de Balcão</h2>
+                <p class="text-slate-500">Inteligência Artificial analisando validades e perdas.</p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Coluna de Inventário Simulado -->
                 <div class="md:col-span-2 space-y-4">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                        <h3 class="font-bold mb-4 flex items-center gap-2 text-gray-700">
-                            <i class="fas fa-boxes"></i> Status de Itens Sensíveis
-                        </h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead class="text-xs uppercase text-gray-400 font-semibold">
-                                    <tr>
-                                        <th class="py-2">Item</th>
-                                        <th class="py-2">Qtd (kg)</th>
-                                        <th class="py-2">Validade</th>
-                                        <th class="py-2">Giro</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-sm text-gray-600">
-                                    <tr class="border-t">
-                                        <td class="py-3 font-medium">Alcatra (Peça)</td>
-                                        <td class="py-3">15.5 kg</td>
-                                        <td class="py-3 text-red-500 font-bold">2 dias</td>
-                                        <td class="py-3"><span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded">Lento</span></td>
-                                    </tr>
-                                    <tr class="border-t">
-                                        <td class="py-3 font-medium">Carne Moída (Patinho)</td>
-                                        <td class="py-3">8.0 kg</td>
-                                        <td class="py-3 text-orange-500 font-bold">3 dias</td>
-                                        <td class="py-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded">Normal</span></td>
-                                    </tr>
-                                    <tr class="border-t">
-                                        <td class="py-3 font-medium">Frango (Peito)</td>
-                                        <td class="py-3">22.0 kg</td>
-                                        <td class="py-3 text-gray-500">7 dias</td>
-                                        <td class="py-3"><span class="bg-red-100 text-red-700 px-2 py-0.5 rounded">Parado</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <table class="w-full text-left">
+                            <thead class="text-xs uppercase text-slate-400 font-bold">
+                                <tr><th class="pb-3">Item</th><th class="pb-3">Qtd</th><th class="pb-3">Validade</th><th class="pb-3">Status</th></tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr class="border-t"><td class="py-4 font-bold">Alcatra Peça</td><td>15.5 kg</td><td class="text-red-500 font-bold">2 Dias</td><td><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">Giro Lento</span></td></tr>
+                                <tr class="border-t"><td class="py-4 font-bold">Patinho Moído</td><td>8.2 kg</td><td class="text-orange-500 font-bold">3 Dias</td><td><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs">Atenção</span></td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Botão e Resposta da IA -->
                 <div class="space-y-4">
-                    <button onclick="gerarInsightsEstoque()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-2">
-                        <i class="fas fa-robot"></i> GERAR INSIGHTS IA
+                    <button onclick="gerarInsightsEstoque()" class="w-full bg-slate-900 text-white font-bold py-5 px-6 rounded-2xl shadow-lg hover:bg-black transition-all flex items-center justify-center gap-3">
+                        <i class="fas fa-robot text-red-500"></i> CONSULTAR IA
                     </button>
-
-                    <div id="ai-loading-estoque" class="hidden glass p-6 rounded-xl border border-red-200 text-center">
-                        <i class="fas fa-brain fa-spin text-3xl text-red-600 mb-2"></i>
-                        <p class="text-sm font-medium thinking">Analisando tendências e datas...</p>
-                    </div>
-
-                    <div id="ai-result-estoque" class="hidden glass p-6 rounded-xl border-l-4 border-red-600 shadow-md">
-                        <h4 class="font-bold text-red-700 flex items-center gap-2 mb-2">
-                            <i class="fas fa-lightbulb"></i> SUGESTÃO DO GESTOR
-                        </h4>
-                        <div id="ai-text-estoque" class="text-gray-700 text-sm space-y-3">
-                            <!-- Inserido via JS -->
-                        </div>
+                    <div id="ai-loading-estoque" class="hidden p-6 text-center"><i class="fas fa-brain fa-spin text-3xl text-red-600 mb-2"></i><p class="text-xs font-bold thinking">PROCESSANDO...</p></div>
+                    <div id="ai-result-estoque" class="hidden glass p-6 rounded-2xl border-l-8 border-red-600 shadow-xl">
+                        <h4 class="font-bold text-slate-800 mb-2">SUGESTÃO DA IA:</h4>
+                        <div id="ai-text-estoque" class="text-slate-600 text-sm space-y-3"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PAINEL 2: CONCIERGE DO CLIENTE (MARKETING) -->
         <div id="view-marketing" class="hidden space-y-6">
-            <header class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-800">Concierge do Cliente</h2>
-                <p class="text-gray-600">IA sugerindo ofertas personalizadas baseadas no perfil de compra.</p>
+            <header class="mb-8 border-b pb-4">
+                <h2 class="text-2xl font-bold text-slate-800">Marketing & Fidelização</h2>
+                <p class="text-slate-500">Gerando ofertas personalizadas para cada cliente.</p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Lista de Clientes -->
-                <div class="md:col-span-1 space-y-4">
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                        <h3 class="font-bold mb-4 text-gray-700">Selecione um Perfil:</h3>
-                        <div class="space-y-2">
-                            <button onclick="selecionarCliente('Sr. João', 'Churrasqueiro Frequente', 'Picanha, Linguiça, Carvão')" class="w-full text-left p-3 rounded-lg border hover:bg-red-50 transition flex justify-between items-center group">
-                                <div>
-                                    <p class="font-bold">Sr. João</p>
-                                    <p class="text-xs text-gray-500">Perfil: Churrasco</p>
-                                </div>
-                                <i class="fas fa-chevron-right text-gray-300 group-hover:text-red-500"></i>
-                            </button>
-                            <button onclick="selecionarCliente('Dona Maria', 'Compra Semanal', 'Frango, Carne Moída, Acém')" class="w-full text-left p-3 rounded-lg border hover:bg-red-50 transition flex justify-between items-center group">
-                                <div>
-                                    <p class="font-bold">Dona Maria</p>
-                                    <p class="text-xs text-gray-500">Perfil: Cozinha Prática</p>
-                                </div>
-                                <i class="fas fa-chevron-right text-gray-300 group-hover:text-red-500"></i>
-                            </button>
-                        </div>
+                <div class="bg-white p-6 rounded-2xl border">
+                    <h3 class="font-bold text-xs uppercase text-slate-400 mb-4">Clientes Frequentes</h3>
+                    <div class="space-y-2">
+                        <button onclick="selecionarCliente('Sr. João', 'Churrasco')" class="w-full text-left p-4 rounded-xl bg-slate-50 border hover:border-red-500 transition-all font-bold">Sr. João</button>
+                        <button onclick="selecionarCliente('Dona Maria', 'Cozinha')" class="w-full text-left p-4 rounded-xl bg-slate-50 border hover:border-red-500 transition-all font-bold">Dona Maria</button>
                     </div>
                 </div>
 
-                <!-- Painel de Ação de Marketing -->
-                <div class="md:col-span-2 space-y-4">
-                    <div id="marketing-empty" class="bg-white p-12 rounded-xl border-2 border-dashed border-gray-300 text-center text-gray-400">
-                        <i class="fas fa-user-tag text-5xl mb-4"></i>
-                        <p>Selecione um cliente para gerar uma oferta personalizada.</p>
-                    </div>
-
-                    <div id="marketing-card" class="hidden bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 id="m-cliente-nome" class="text-xl font-bold text-gray-800">Sr. João</h3>
-                                <p id="m-cliente-perfil" class="text-sm text-red-600 font-medium">Churrasqueiro Frequente</p>
-                            </div>
-                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Ativo</span>
+                <div class="md:col-span-2">
+                    <div id="marketing-card" class="hidden bg-white p-8 rounded-2xl shadow-xl border">
+                        <h3 id="m-cliente-nome" class="text-2xl font-black mb-6"></h3>
+                        <div class="flex gap-4">
+                            <button onclick="gerarOfertaMarketing()" class="flex-1 bg-red-700 text-white p-4 rounded-xl font-bold uppercase text-xs">Criar Oferta IA</button>
+                            <button onclick="alert('Enviando para WhatsApp...')" class="flex-1 bg-green-500 text-white p-4 rounded-xl font-bold uppercase text-xs">Enviar WhatsApp</button>
                         </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <button onclick="gerarOfertaMarketing()" class="bg-gray-800 hover:bg-black text-white p-4 rounded-xl font-bold flex items-center justify-center gap-2 transition">
-                                <i class="fas fa-magic"></i> CRIAR OFERTA IA
-                            </button>
-                            <button class="bg-green-500 hover:bg-green-600 text-white p-4 rounded-xl font-bold flex items-center justify-center gap-2 transition">
-                                <i class="fab fa-whatsapp"></i> ENVIAR LEMBRETE
-                            </button>
-                        </div>
-
-                        <div id="ai-loading-marketing" class="hidden mt-6 p-4 text-center">
-                            <p class="text-sm font-medium thinking text-gray-500 italic">IA analisando histórico e estoque atual...</p>
-                        </div>
-
-                        <div id="ai-result-marketing" class="hidden mt-6 p-6 bg-red-50 rounded-xl border border-red-100">
-                            <h4 class="font-bold text-gray-800 mb-2">Mensagem Personalizada Gerada:</h4>
-                            <p id="ai-text-marketing" class="italic text-gray-600 bg-white p-4 rounded border text-sm"></p>
+                        <div id="ai-loading-marketing" class="hidden mt-6 text-center thinking font-bold text-slate-400">ANALISANDO PERFIL...</div>
+                        <div id="ai-result-marketing" class="hidden mt-6 p-6 bg-slate-900 text-white rounded-xl border-l-8 border-red-500">
+                            <p id="ai-text-marketing" class="italic"></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
-
-    <footer class="text-center p-8 text-gray-400 text-sm">
-        Mercadão das Carnes &copy; 2026 - Desenvolvido com Inteligência Artificial
-    </footer>
 
     <script>
         function switchTab(tab) {
             document.getElementById('view-gestao').classList.toggle('hidden', tab !== 'gestao');
             document.getElementById('view-marketing').classList.toggle('hidden', tab !== 'marketing');
-            
             document.getElementById('tab-gestao').classList.toggle('tab-active', tab === 'gestao');
             document.getElementById('tab-marketing').classList.toggle('tab-active', tab === 'marketing');
         }
 
-        // Simulação da IA - GESTÃO
+        function toggleFullscreen() { if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); } else { document.exitFullscreen(); } }
+
         function gerarInsightsEstoque() {
             const loading = document.getElementById('ai-loading-estoque');
             const result = document.getElementById('ai-result-estoque');
-            const textDiv = document.getElementById('ai-text-estoque');
-            
-            loading.classList.remove('hidden');
-            result.classList.add('hidden');
-
+            loading.classList.remove('hidden'); result.classList.add('hidden');
             setTimeout(() => {
-                loading.classList.add('hidden');
-                result.classList.remove('hidden');
-                
-                textDiv.innerHTML = `
-                    <p><strong>🚨 ALERTA DE GIRO:</strong> Identificamos <strong>15kg de Alcatra</strong> com validade crítica (48h).</p>
-                    <p><strong>ESTRATÉGIA DE MARKETING:</strong></p>
-                    <ul class="list-disc ml-4 space-y-1">
-                        <li>Criar <strong>Combo Churrasco Família</strong>: 1kg Alcatra + 1 Pacote Sal Grosso por R$ 49,90.</li>
-                        <li>Notificar clientes do perfil "Churrasco" via WhatsApp agora.</li>
-                        <li>Sugestão de cross-sell: Oferecer acendedor de carvão no balcão por preço de custo.</li>
-                    </ul>
+                loading.classList.add('hidden'); result.classList.remove('hidden');
+                document.getElementById('ai-text-estoque').innerHTML = `
+                    <p><strong>🚨 ALERTA:</strong> 15kg de Alcatra vencendo em 48h.</p>
+                    <p><strong>AÇÃO:</strong> Criar "Combo Churrasco" com 15% OFF e oferecer carvão como cross-sell.</p>
                 `;
-            }, 2000);
+            }, 1500);
         }
 
-        // Simulação da IA - MARKETING
-        let clienteAtual = null;
-
-        function selecionarCliente(nome, perfil, historico) {
-            clienteAtual = { nome, perfil, historico };
-            document.getElementById('marketing-empty').classList.add('hidden');
+        function selecionarCliente(nome, perfil) {
             document.getElementById('marketing-card').classList.remove('hidden');
-            
             document.getElementById('m-cliente-nome').innerText = nome;
-            document.getElementById('m-cliente-perfil').innerText = perfil;
-            
             document.getElementById('ai-result-marketing').classList.add('hidden');
         }
 
         function gerarOfertaMarketing() {
             const loading = document.getElementById('ai-loading-marketing');
             const result = document.getElementById('ai-result-marketing');
-            const textDiv = document.getElementById('ai-text-marketing');
-
-            loading.classList.remove('hidden');
-            result.classList.add('hidden');
-
+            loading.classList.remove('hidden'); result.classList.add('hidden');
             setTimeout(() => {
-                loading.classList.add('hidden');
-                result.classList.remove('hidden');
-
-                if(clienteAtual.nome === 'Sr. João') {
-                    textDiv.innerText = `"Olá Sr. João! Notamos que faz 7 dias que você comprou Picanha. Temos um lote novo e fresco no balcão hoje com 10% OFF exclusivo para você. Que tal levar também nosso carvão e o tempero da casa para o churrasco de amanhã?"`;
-                } else {
-                    textDiv.innerText = `"Oi Dona Maria! Hoje recebemos o peito de frango fresquinho que a senhora gosta. Preparamos uma oferta: na compra de 2kg, o Acém moído sai com 15% de desconto para facilitar seu preparo semanal!"`;
-                }
-            }, 2000);
+                loading.classList.add('hidden'); result.classList.remove('hidden');
+                document.getElementById('ai-text-marketing').innerText = "Olá! Notamos que faz 7 dias da sua última compra de carne para churrasco. Temos uma peça de Alcatra selecionada com 10% OFF hoje. Aceita?";
+            }, 1500);
         }
-
-        // Iniciar com tab correta
         switchTab('gestao');
     </script>
 </body>
